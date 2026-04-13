@@ -1,0 +1,36 @@
+services:
+    mongo:
+        networks:
+            - examprep2task1
+        container_name: mongodb
+        volumes:
+            - data:/data/db
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=mongoadmin
+            - MONGO_INITDB_ROOT_PASSWORD=secret
+        image: mongo
+    backend:
+        networks:
+            - examprep2task1
+        container_name: backend
+        ports:
+            - 80:80
+        volumes:
+            - logs:/logs
+        build:
+          context: ./backend
+#        image: pchelkovskiy/backend
+    frontend:
+        networks:
+            - examprep2task1
+        container_name: frontend
+        ports:
+            - 3001:3000
+        build:
+          context: ./frontend
+#        image: pchelkovskiy/frontend
+networks:
+    examprep2task1:
+volumes:
+    data:
+    logs:
